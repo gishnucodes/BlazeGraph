@@ -2,6 +2,11 @@
 
 An in-memory property graph database capable of handling **100K nodes and relationships**, with a **GQL (ISO/IEC 39075) query interpreter**. Built in a phased approach from storage engine to full query execution.
 
+> [!NOTE]
+> **This document is the original high-level overview.** Detailed, execution-ready plans now live in [`plan/`](plan/) — start at [`plan/master_plan.md`](plan/master_plan.md), which records the resolved decisions (language: Java — implemented; persistence: in-memory v1; concurrency: single-writer/multi-reader; API: embedded + REPL/CLI, HTTP in Phase 5) and cross-cutting contracts (NULL/3VL semantics, error taxonomy, module graph).
+>
+> **Status (2026-07-14):** Phase 1 implemented but **untested** — the Maven build is broken (bad surefire artifactId in `pom.xml`) and Maven isn't installed; see `plan/phase_1.md` §5 for the pre-Phase-2 hardening checklist. Phases 2–6 planned in `plan/phase_2.md` … `plan/phase_6.md`.
+
 ---
 
 ## User Review Required
