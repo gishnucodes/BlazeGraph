@@ -1,0 +1,1 @@
+MATCH (n:A&B) RETURN n

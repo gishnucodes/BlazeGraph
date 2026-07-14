@@ -1,0 +1,1 @@
+FILTER (x IN list WHERE x > 0)

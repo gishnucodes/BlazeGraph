@@ -1,0 +1,2 @@
+// comment
+MATCH (n) RETURN n

@@ -1,0 +1,1 @@
+MATCH (n) RETURN SUM(n.age), AVG(n.age), MIN(n.age), MAX(n.age)

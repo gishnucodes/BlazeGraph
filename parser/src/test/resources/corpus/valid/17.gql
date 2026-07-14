@@ -1,0 +1,1 @@
+MATCH (n) WHERE n.age = 20 OR n.name = 'Bob' RETURN n

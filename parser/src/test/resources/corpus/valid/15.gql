@@ -1,0 +1,1 @@
+MATCH (n)-[*2..]->(m) RETURN n

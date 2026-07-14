@@ -1,0 +1,1 @@
+MATCH (n) RETURN n NEXT MATCH (m) RETURN m
