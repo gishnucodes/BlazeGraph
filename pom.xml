@@ -12,6 +12,10 @@
     <modules>
         <module>core</module>
         <module>parser</module>
+        <module>engine</module>
+        <module>cli</module>
+        <module>server</module>
+        <module>benchmark</module>
     </modules>
 
     <properties>

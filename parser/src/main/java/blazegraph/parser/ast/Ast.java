@@ -21,6 +21,7 @@ public final class Ast {
         Expression skip,
         Expression limit,
         List<QueryStatement> unionArms,
+        List<Boolean> unionAlls,
         int line, int col
     ) implements Statement {}
     

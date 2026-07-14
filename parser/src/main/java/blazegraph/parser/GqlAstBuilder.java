@@ -24,14 +24,19 @@ public class GqlAstBuilder extends GQLBaseVisitor<Object> {
 
     @Override
     public Object visitQueryStatement(GQLParser.QueryStatementContext ctx) {
-        List<QueryStatement> arms = new ArrayList<>();
-        for (GQLParser.QueryConjunctorContext cCtx : ctx.queryConjunctor()) {
-            arms.add((QueryStatement) visit(cCtx));
+        if (ctx.queryConjunctor().size() > 1) {
+            List<QueryStatement> arms = new ArrayList<>();
+            List<Boolean> unionAlls = new ArrayList<>();
+            for (int i = 0; i < ctx.queryConjunctor().size(); i++) {
+                arms.add((QueryStatement) visit(ctx.queryConjunctor(i)));
+                if (i > 0) {
+                    unionAlls.add(ctx.getChild(i * 2 - 1).getText().toUpperCase().contains("ALL") || 
+                                  (ctx.getChildCount() > i * 2 && ctx.getChild(i * 2).getText().toUpperCase().contains("ALL")));
+                }
+            }
+            return new QueryStatement(null, null, null, null, null, null, arms, unionAlls, ctx.start.getLine(), ctx.start.getCharPositionInLine());
         }
-        if (arms.size() == 1) {
-            return arms.get(0);
-        }
-        return new QueryStatement(null, null, null, null, null, null, arms, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        return visit(ctx.queryConjunctor(0));
     }
 
     @Override
@@ -46,7 +51,7 @@ public class GqlAstBuilder extends GQLBaseVisitor<Object> {
         Expression skip = ctx.skipClause() != null ? (Expression) visit(ctx.skipClause()) : null;
         Expression limit = ctx.limitClause() != null ? (Expression) visit(ctx.limitClause()) : null;
         
-        return new QueryStatement(matches, where, ret, orderBy, skip, limit, null, ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        return new QueryStatement(matches, where, ret, orderBy, skip, limit, null, null, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 
     @Override
@@ -178,7 +183,7 @@ public class GqlAstBuilder extends GQLBaseVisitor<Object> {
     @Override
     public Object visitReturnItem(GQLParser.ReturnItemContext ctx) {
         Expression expr = (Expression) visit(ctx.expression());
-        String alias = ctx.identifier() != null ? parseId(ctx.identifier()) : null;
+        String alias = ctx.identifier() != null ? parseId(ctx.identifier()) : ctx.expression().getText();
         return new ReturnItem(expr, alias, ctx.start.getLine(), ctx.start.getCharPositionInLine());
     }
 

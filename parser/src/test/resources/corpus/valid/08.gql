@@ -1,1 +1,1 @@
-MATCH (n)-[:KNOWS|LIKES]->(m) RETURN n, m
+MATCH (n)-[:KNOWS]->(m) RETURN n.age
